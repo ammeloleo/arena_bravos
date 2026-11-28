@@ -51,7 +51,7 @@ class ServicesComanda
      */
     public function comItens(Comanda $comanda): Comanda
     {
-        return $comanda->load('items');
+        return $comanda->load('items.product');
     }
 
     /**
@@ -92,6 +92,7 @@ class ServicesComanda
             $item->fill([
                 'product_name' => $product->name,
                 'unit_price' => $product->price,
+                'unit_cost' => $product->cost_price,
                 'quantity' => ($item->exists ? $item->quantity : 0) + $quantity,
             ]);
             $item->save();

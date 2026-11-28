@@ -7,6 +7,33 @@
     --bravos-line: #2a2a2a;
 }
 
+.bravos-report-chart {
+    max-height: 28rem;
+    overflow-y: auto;
+}
+
+.bravos-report-row {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr) minmax(6rem, auto);
+    align-items: center;
+    gap: .75rem;
+    padding-block: .4rem;
+}
+
+.bravos-report-track {
+    height: .75rem;
+    border-radius: .25rem;
+    background: #292929;
+    overflow: hidden;
+}
+
+.bravos-report-track span {
+    display: block;
+    height: 100%;
+    background: var(--bravos-red);
+    border-radius: inherit;
+}
+
 body.bravos-body {
     background: var(--bravos-bg);
     color: #f2f2f2;
@@ -15,28 +42,32 @@ body.bravos-body {
 /* Sidebar (ajuste os seletores conforme o markup real do x-sidebar) */
 #main-content {
     background: var(--bravos-bg);
+    min-width: 0;
 }
 
 .container-fluid.p-4 {
     background: var(--bravos-bg);
-    min-height: 100%;
-    border-radius: .5rem;
+    max-width: 1440px;
     position: relative;
-    overflow: hidden;
+    isolation: isolate;
 }
 
 .container-fluid.p-4::before {
     content: "";
     position: absolute;
-    top: -20px; right: -60px;
-    width: 260px; height: 140px;
+    top: 0;
+    right: 0;
+    width: min(20rem, 55%);
+    height: 8rem;
     background: repeating-linear-gradient(
         -35deg,
         var(--bravos-red) 0px, var(--bravos-red) 14px,
         transparent 14px, transparent 26px
     );
-    opacity: .18;
+    opacity: .16;
+    mask-image: radial-gradient(ellipse at top right, #000, transparent 72%);
     pointer-events: none;
+    z-index: -1;
 }
 
 /* Cards */
@@ -78,7 +109,21 @@ a.container-fluid.p-4 .card:hover {
     color: #fff;
     border-left: 4px solid var(--bravos-red);
     padding-left: .75rem;
-    margin-top: .25rem;
+    margin: .625rem 0 .875rem;
+    line-height: 1.15;
+}
+
+.bravos-dashboard-action {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .875rem;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.bravos-dashboard-link .bi-arrow-right {
+    color: #ff9299;
 }
 
 .bravos-title {
@@ -271,13 +316,22 @@ a.container-fluid.p-4 .card:hover {
     position: relative;
 }
 
-/* fio vermelho no rodapé da topbar, remetendo à listra da logo */
-.bravos-topbar::after {
+.bravos-topbar-inner {
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    position: relative;
+}
+
+.bravos-topbar-inner::after {
     content: "";
     position: absolute;
-    left: 0; right: 0; bottom: -1px;
+    inset-inline-start: 1.5rem;
+    bottom: -1px;
+    width: min(16rem, calc(100% - 3rem));
     height: 2px;
-    background: linear-gradient(90deg, var(--bravos-red) 0%, transparent 60%);
+    background: linear-gradient(90deg, var(--bravos-red), transparent);
+    pointer-events: none;
 }
 
 .bravos-topbar-title {
@@ -291,22 +345,34 @@ a.container-fluid.p-4 .card:hover {
     width: 260px;
     min-width: 260px;
     border-right: 1px solid var(--bravos-line);
-    position: relative;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
-/* listras diagonais sutis, ecoando a logo, no topo da sidebar */
-.bravos-sidebar::before {
+.bravos-brand-panel {
+    position: relative;
+    isolation: isolate;
+    padding: .75rem;
+}
+
+.bravos-brand-panel::before {
     content: "";
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 140px;
+    inset: 0;
+    border-radius: .5rem;
     background: repeating-linear-gradient(
         -35deg,
         var(--bravos-red) 0px, var(--bravos-red) 10px,
         transparent 10px, transparent 20px
     );
-    opacity: .12;
+    opacity: .2;
+    mask-image: linear-gradient(110deg, #000 15%, transparent 95%);
     pointer-events: none;
+    z-index: -1;
 }
 
 .bravos-brand {
@@ -343,7 +409,7 @@ a.container-fluid.p-4 .card:hover {
 
 .bravos-nav-label {
     text-transform: uppercase;
-    color: #6b6b6b;
+    color: #a0a0a0;
     font-size: .7rem;
     font-weight: 700;
     letter-spacing: .1em;
@@ -380,13 +446,34 @@ a.container-fluid.p-4 .card:hover {
 }
 
 .bravos-nav-link.active {
-    background: var(--bravos-red);
+    background: #2d1517;
+    box-shadow: inset 3px 0 var(--bravos-red);
     color: #fff;
     font-weight: 600;
 }
 
 .bravos-nav-link.active i {
-    color: #fff;
+    color: #ff9299;
+}
+
+.bravos-body :is(a, button, summary):focus-visible {
+    outline: 2px solid #ff9299;
+    outline-offset: 3px;
+}
+
+.bravos-order-heading {
+    overflow-wrap: anywhere;
+}
+
+.bravos-add-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .5rem;
+}
+
+.bravos-item-quantity {
+    width: 3.25rem;
 }
 .bravos-card-head {
     display: flex;
@@ -430,4 +517,127 @@ a.container-fluid.p-4 .card:hover {
    Sobrescrevemos para um cinza mais claro, legível no tema escuro. */
 .text-muted {
     color: #a0a0a0 !important;
+}
+
+.bravos-product-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    background: var(--bravos-line);
+    color: #a0a0a0;
+}
+
+.bravos-disclosure {
+    color: #e0e0e0;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.bravos-disclosure:hover {
+    color: #fff;
+}
+
+.bravos-disclosure::marker {
+    color: #a0a0a0;
+}
+
+.bravos-category-panel {
+    background: var(--bravos-bg);
+    border: 1px solid var(--bravos-line);
+}
+
+.bravos-category-panel input {
+    flex-basis: 8rem;
+    min-width: 0;
+}
+
+.bravos-category-error {
+    color: #ff9299;
+}
+
+.bravos-category-status {
+    color: #75dca3;
+}
+
+.bravos-category-edit {
+    flex-basis: 14rem;
+    min-width: 0;
+}
+
+.bravos-category-edit input {
+    min-width: 0;
+}
+
+.bravos-catalog .bravos-photo-input {
+    font-size: .75rem;
+}
+
+.bravos-catalog .bravos-photo-input::file-selector-button,
+.bravos-catalog .bravos-photo-input:hover::file-selector-button {
+    background-color: #292929;
+    color: #f2f2f2;
+}
+
+.bravos-catalog .form-check-input {
+    color-scheme: dark;
+}
+
+.bravos-catalog .form-check-input:checked {
+    background-color: var(--bravos-red);
+    border-color: var(--bravos-red);
+}
+
+.bravos-product-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.bravos-product-editor:has(.collapse:not(.show)) {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    .bravos-sidebar {
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        max-height: 65vh;
+        align-self: stretch;
+        z-index: 1030;
+        border-right: 0;
+        border-bottom: 1px solid var(--bravos-line);
+    }
+
+    .bravos-scroll-target {
+        scroll-margin-top: 6.5rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .container-fluid.p-4 {
+        padding: .75rem !important;
+    }
+
+    .bravos-topbar-inner {
+        padding-inline: .75rem;
+    }
+
+    .bravos-topbar-inner::after {
+        inset-inline-start: .75rem;
+    }
+
+    .bravos-catalog .bravos-product-thumbnail {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 359.98px) {
+    .bravos-add-item {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .bravos-add-item form {
+        justify-self: end;
+    }
 }

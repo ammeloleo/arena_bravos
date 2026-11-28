@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['category_id', 'name', 'price', 'is_active'])]
+#[Fillable(['category_id', 'name', 'price', 'cost_price', 'is_active'])]
 class Product extends Model
 {
     /** @use HasFactory<ProductFactory> */
@@ -23,6 +23,7 @@ class Product extends Model
         return [
             'is_active' => 'boolean',
             'price' => 'decimal:2',
+            'cost_price' => 'decimal:2',
         ];
     }
 

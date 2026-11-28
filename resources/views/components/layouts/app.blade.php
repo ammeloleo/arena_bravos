@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{{ asset('css/arena-bravos.css') }}">
 </head>
 <body class="bravos-body">
-    <div class="d-flex min-vh-100">
+    <div class="d-flex flex-column flex-lg-row min-vh-100">
         <x-sidebar />
 
         <main class="flex-grow-1" id="main-content">

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['comanda_id', 'product_id', 'product_name', 'quantity', 'unit_price'])]
+#[Fillable(['comanda_id', 'product_id', 'product_name', 'quantity', 'unit_price', 'unit_cost'])]
 class ComandaItem extends Model
 {
     /** @use HasFactory<ComandaItemFactory> */
@@ -19,6 +19,7 @@ class ComandaItem extends Model
         return [
             'quantity' => 'integer',
             'unit_price' => 'decimal:2',
+            'unit_cost' => 'decimal:2',
         ];
     }
 
@@ -29,7 +30,7 @@ class ComandaItem extends Model
 
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withTrashed();
     }
 
     public function subtotal(): float

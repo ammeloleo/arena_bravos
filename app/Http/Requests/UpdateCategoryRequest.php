@@ -7,6 +7,8 @@ use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
 {
+    protected $errorBag = 'category';
+
     public function authorize(): bool
     {
         return true;
